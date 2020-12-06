@@ -71,37 +71,7 @@ foundID.push('222222');
 foundID.push('333333');
 foundID.push('444444');
 
-
-
-
 const tileDatas = PicSearchData(foundPic, foundID);
-
-// function SingleLineGridList(props) {
-//   const { classes } = props;
-//
-//   return (
-//     <div className={classes.root}>
-//       <Grid container justify="center" className={classes.line}>
-//         <Grid container item xs={3} md={4} lg={3} spacing={3} >
-//           <p className={classes.oridata}>
-//             <img src={oriPic} className={classes.img} alt={oriID}/>
-//             <p><b>ID</b>:{oriID}</p>
-//             <p><b>Timestamp</b>:{oriTimeStamp}</p>
-//           </p>
-//         </Grid>
-//         <Grid container item xs={9} md={8} lg={9} spacing={3}>
-//             {tileDatas.map(tile => (
-//                   <p>
-//                     <img src={tile.img} className={classes.image} alt={tile.foundID}/>
-//                     <p><b>ID</b>:{tile.title}</p>
-//                   </p>
-//               ))}
-//         </Grid>
-//       </Grid>
-//     </div>
-//   );
-// }
-
 
 class SingleLineGridList extends Component{
   constructor(props){
@@ -110,7 +80,7 @@ class SingleLineGridList extends Component{
       data:props.data ||{}
     }
   }
-
+//Show list of pictures has found.
   GenerateFoundList = ()=>{
     const {data} = this.state;
     const {classes} = this.props;
@@ -131,8 +101,8 @@ class SingleLineGridList extends Component{
            <Grid container item xs={3} md={4} lg={3} spacing={3} >
              <p className={classes.oridata}>
                <img src={data.oriPic} className={classes.img} alt={oriID}/>
-               <p><b>ID</b>:{oriID}</p>
-               <p><b>Timestamp</b>:{oriTimeStamp}</p>
+               <p><b>ID</b>:{data.oriID}</p>
+               <p><b>Timestamp</b>:{data.oriTimeStamp}</p>
              </p>
            </Grid>
            <Grid container item xs={9} md={8} lg={9} spacing={3}>

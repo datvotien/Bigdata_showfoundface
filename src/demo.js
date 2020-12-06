@@ -13,10 +13,7 @@ const styles = theme => ({
   grow: {
     flexGrow: 1,
   },
-  // menuButton: {
-  //   marginLeft: -12,
-  //   marginRight: 20,
-  // },
+
   title: {
     display: 'none',
     position:'fixed',
@@ -25,57 +22,36 @@ const styles = theme => ({
     },
   },
 });
-const data = [
+
+const dataFound = [
   {
-    foundID:111111,
     title:"111111",
     img:'https://upload.wikimedia.org/wikipedia/commons/b/b4/JPEG_example_JPG_RIP_100.jpg'
   },{
-    foundID:111112,
-    title:"111111",
+    title:"111112",
     img:'https://upload.wikimedia.org/wikipedia/commons/b/b4/JPEG_example_JPG_RIP_100.jpg'
   },{
-    foundID:111113,
-    title:"111111",
+    title:"111113",
     img:'https://upload.wikimedia.org/wikipedia/commons/b/b4/JPEG_example_JPG_RIP_100.jpg',
   }
 ]
-function buildSingleList(){
-  return Array.from(Array(1).keys()).map( (item,index) => <SingleLineGridList data={data} key={item}/>)
-}
-
-// function SearchAppBar(props) {
-//   const { classes } = props;
-//   return (
-//     <div className={classes.root}>
-//       <AppBar position="fixed">
-//         <Toolbar>
-//           <Typography className={classes.title} variant="h6" color="inherit" noWrap>
-//             Finding Face Result
-//           </Typography>
-//         </Toolbar>
-//       </AppBar>
-//       {buildSingleList()}
-//     </div>
-//   );
-// }
-
 
 
 class SearchAppBar extends Component{
   constructor(props){
     super(props)
-
     this.state = {
       data:[
         {
           oriPic:'https://www.siliconera.com/wp-content/uploads/2017/09/ashspikachuhoenhatsm1504769753857_1280w.jpg',
           oriID:"123456",
-          founds:data
+          oriTimeStamp: "10:00",
+          founds:dataFound
         }
       ]
     }
   }
+  //print to screen list view of oriPic and foundPic by oriID
   buildSingleList(){
     console.log(this.state.data)
     return this.state.data.map((item) => <SingleLineGridList data={item} key={item.oriID}/>)
@@ -85,21 +61,24 @@ class SearchAppBar extends Component{
       if(!ori){
         return;
       }
+      //copy data from ori to this.state.data
       this.setState({data:[...this.state.data,ori]})
   }
-
-componentDidMount = ()=>{
-  setTimeout (()=>{
-    this.Insert({
-      oriPic:'https://www.siliconera.com/wp-content/uploads/2017/09/ashspikachuhoenhatsm1504769753857_1280w.jpg',
-      oriID:"123457",
-      founds:data
-    })
-  },5000)
-}
+//demo call function Insert()
+  componentDidMount = ()=>{
+    setTimeout (()=>{
+      this.Insert({
+        oriPic:'https://www.siliconera.com/wp-content/uploads/2017/09/ashspikachuhoenhatsm1504769753857_1280w.jpg',
+        oriID:"123457",
+        oriTimeStamp: "10:01",
+        founds:dataFound
+      })
+      console.log(this.state.data)
+    },5000)
+  }
 
   render = ()=>{
-      const { classes } = this.props;
+    const { classes } = this.props;
 
     return (
       <div className={classes.root}>

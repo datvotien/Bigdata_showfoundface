@@ -5,8 +5,7 @@ const PicSearchData = (foundPic, foundID) => {
         const foundData = [
             {
                 img: foundPic[i],
-                title: foundID[i],
-                timestamp: '',
+                title: foundID[i]
             }
         ];
         foundData.forEach(item => receiveData.push(item));
