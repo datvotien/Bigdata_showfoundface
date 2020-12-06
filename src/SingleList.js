@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{Component} from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import {PicSearchData} from './PicSearchData';
@@ -16,16 +16,8 @@ const styles = theme => ({
   },
   gridList: {
     flexWrap: 'nowrap',
-    // Promote the list into his own layer on Chrome. This cost memory but helps keeping high FPS.
     transform: 'translateZ(0)',
   },
-  // container:{
-  //   backgroundColor: 'white',
-  //   color: 'black',
-  //   border: '2px solid #4CAF50',
-  //   flexWrap: 'nowrap',
-  //   transform: 'translateZ(0)',
-  // },
 
   title: {
     color: theme.palette.primary.light,
@@ -51,19 +43,6 @@ const styles = theme => ({
   }
 });
 
-// const tileData = [
-//   {
-//     img: "https://source.unsplash.com/random/600*600",
-//     title: "Image",
-//     author: "author",
-//   }
-// ];
-
-// let tileDatas = [];
-
-// for (var i=0; i< 10; i++){
-//   tileData.forEach(item => tileDatas.push(item));
-// }
 let oriPic = 'https://www.siliconera.com/wp-content/uploads/2017/09/ashspikachuhoenhatsm1504769753857_1280w.jpg';
 let oriID = '123456';
 let oriTimeStamp = '10:00';
@@ -92,32 +71,77 @@ foundID.push('222222');
 foundID.push('333333');
 foundID.push('444444');
 
-const tileDatas = PicSearchData(foundPic, foundID);
-//////////
-function SingleLineGridList(props) {
-  const { classes } = props;
 
-  return (
-    <div className={classes.root}>
-      <Grid container justify="center" className={classes.line}>
-        <Grid container item xs={3} md={4} lg={3} spacing={3} >
-          <p className={classes.oridata}>
-            <img src={oriPic} className={classes.img} alt={oriID}/>
-            <p><b>ID</b>:{oriID}</p>
-            <p><b>Timestamp</b>:{oriTimeStamp}</p>
+
+
+const tileDatas = PicSearchData(foundPic, foundID);
+
+// function SingleLineGridList(props) {
+//   const { classes } = props;
+//
+//   return (
+//     <div className={classes.root}>
+//       <Grid container justify="center" className={classes.line}>
+//         <Grid container item xs={3} md={4} lg={3} spacing={3} >
+//           <p className={classes.oridata}>
+//             <img src={oriPic} className={classes.img} alt={oriID}/>
+//             <p><b>ID</b>:{oriID}</p>
+//             <p><b>Timestamp</b>:{oriTimeStamp}</p>
+//           </p>
+//         </Grid>
+//         <Grid container item xs={9} md={8} lg={9} spacing={3}>
+//             {tileDatas.map(tile => (
+//                   <p>
+//                     <img src={tile.img} className={classes.image} alt={tile.foundID}/>
+//                     <p><b>ID</b>:{tile.title}</p>
+//                   </p>
+//               ))}
+//         </Grid>
+//       </Grid>
+//     </div>
+//   );
+// }
+
+
+class SingleLineGridList extends Component{
+  constructor(props){
+    super(props)
+    this.state = {
+      data:props.data ||{}
+    }
+  }
+
+  GenerateFoundList = ()=>{
+    const {data} = this.state;
+    const {classes} = this.props;
+    return  data.founds.map((tile,index) => (
+          <p key={"key"+index}>
+            <img src={tile.img} className={classes.image} alt={tile.foundID}/>
+            <p><b>ID</b>:{tile.title}</p>
           </p>
-        </Grid>
-        <Grid container item xs={9} md={8} lg={9} spacing={3}>
-            {tileDatas.map(tile => (
-                  <p>
-                    <img src={tile.img} className={classes.image} alt={tile.foundID}/>
-                    <p><b>ID</b>:{tile.title}</p>
-                  </p>
-              ))}
-        </Grid>
-      </Grid>
-    </div>
-  );
+      ))
+  }
+
+  render = ()=>{
+    const { classes } = this.props;
+    const  {data} = this.state
+    return (
+       <div className={classes.root}>
+         <Grid container justify="center" className={classes.line}>
+           <Grid container item xs={3} md={4} lg={3} spacing={3} >
+             <p className={classes.oridata}>
+               <img src={data.oriPic} className={classes.img} alt={oriID}/>
+               <p><b>ID</b>:{oriID}</p>
+               <p><b>Timestamp</b>:{oriTimeStamp}</p>
+             </p>
+           </Grid>
+           <Grid container item xs={9} md={8} lg={9} spacing={3}>
+               {this.GenerateFoundList()}
+           </Grid>
+         </Grid>
+       </div>
+     );
+  }
 }
 
 SingleLineGridList.propTypes = {
