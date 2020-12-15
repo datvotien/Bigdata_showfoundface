@@ -5,7 +5,6 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
 import SingleLineGridList from "./SingleList";
-import {PicSearchData} from './PicSearchData';
 const styles = theme => ({
   root: {
     width: '100%',
@@ -25,14 +24,14 @@ const styles = theme => ({
 
 const dataFound = [
   {
-    title:"111111",
-    img:'https://upload.wikimedia.org/wikipedia/commons/b/b4/JPEG_example_JPG_RIP_100.jpg'
+    foundID:"111111",
+    foundPic:'https://upload.wikimedia.org/wikipedia/commons/b/b4/JPEG_example_JPG_RIP_100.jpg'
   },{
-    title:"111112",
-    img:'https://upload.wikimedia.org/wikipedia/commons/b/b4/JPEG_example_JPG_RIP_100.jpg'
+    foundID:"111112",
+    foundPic:'https://upload.wikimedia.org/wikipedia/commons/b/b4/JPEG_example_JPG_RIP_100.jpg'
   },{
-    title:"111113",
-    img:'https://upload.wikimedia.org/wikipedia/commons/b/b4/JPEG_example_JPG_RIP_100.jpg',
+    foundID:"111113",
+    foundPic:'https://upload.wikimedia.org/wikipedia/commons/b/b4/JPEG_example_JPG_RIP_100.jpg',
   }
 ]
 

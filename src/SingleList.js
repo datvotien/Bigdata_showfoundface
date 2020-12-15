@@ -71,8 +71,6 @@ foundID.push('222222');
 foundID.push('333333');
 foundID.push('444444');
 
-const tileDatas = PicSearchData(foundPic, foundID);
-
 class SingleLineGridList extends Component{
   constructor(props){
     super(props)
@@ -86,8 +84,8 @@ class SingleLineGridList extends Component{
     const {classes} = this.props;
     return  data.founds.map((tile,index) => (
           <p key={"key"+index}>
-            <img src={tile.img} className={classes.image} alt={tile.foundID}/>
-            <p><b>ID</b>:{tile.title}</p>
+            <img src={tile.foundPic} className={classes.image} alt={tile.foundID}/>
+            <p><b>ID</b>:{tile.foundID}</p>
           </p>
       ))
   }
