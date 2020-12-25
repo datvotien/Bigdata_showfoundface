@@ -1,7 +1,6 @@
 import React,{Component} from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import {PicSearchData} from './PicSearchData';
 import Grid from '@material-ui/core/Grid';
 
 
@@ -43,33 +42,7 @@ const styles = theme => ({
   }
 });
 
-let oriPic = 'https://www.siliconera.com/wp-content/uploads/2017/09/ashspikachuhoenhatsm1504769753857_1280w.jpg';
 let oriID = '123456';
-let oriTimeStamp = '10:00';
-
-let foundPic = [];
-foundPic.push('https://upload.wikimedia.org/wikipedia/commons/b/b4/JPEG_example_JPG_RIP_100.jpg');
-foundPic.push('https://upload.wikimedia.org/wikipedia/commons/b/b4/JPEG_example_JPG_RIP_100.jpg');
-foundPic.push('https://upload.wikimedia.org/wikipedia/commons/b/b4/JPEG_example_JPG_RIP_100.jpg');
-foundPic.push('https://upload.wikimedia.org/wikipedia/commons/b/b4/JPEG_example_JPG_RIP_100.jpg');
-foundPic.push('https://upload.wikimedia.org/wikipedia/commons/b/b4/JPEG_example_JPG_RIP_100.jpg');
-foundPic.push('https://upload.wikimedia.org/wikipedia/commons/b/b4/JPEG_example_JPG_RIP_100.jpg');
-foundPic.push('https://upload.wikimedia.org/wikipedia/commons/b/b4/JPEG_example_JPG_RIP_100.jpg');
-foundPic.push('https://upload.wikimedia.org/wikipedia/commons/b/b4/JPEG_example_JPG_RIP_100.jpg');
-foundPic.push('https://upload.wikimedia.org/wikipedia/commons/b/b4/JPEG_example_JPG_RIP_100.jpg');
-foundPic.push('https://upload.wikimedia.org/wikipedia/commons/b/b4/JPEG_example_JPG_RIP_100.jpg');
-
-let foundID = [];
-foundID.push('111111');
-foundID.push('222222');
-foundID.push('333333');
-foundID.push('444444');
-foundID.push('555555');
-foundID.push('666666');
-foundID.push('111111');
-foundID.push('222222');
-foundID.push('333333');
-foundID.push('444444');
 
 class SingleLineGridList extends Component{
   constructor(props){
