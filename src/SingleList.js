@@ -42,8 +42,6 @@ const styles = theme => ({
   }
 });
 
-let oriID = '123456';
-
 class SingleLineGridList extends Component{
   constructor(props){
     super(props)
@@ -71,9 +69,9 @@ class SingleLineGridList extends Component{
          <Grid container justify="center" className={classes.line}>
            <Grid container item xs={3} md={4} lg={3} spacing={3} >
              <p className={classes.oridata}>
-               <img src={data.oriPic} className={classes.img} alt={oriID}/>
-               <p><b>ID</b>:{data.oriID}</p>
-               <p><b>Timestamp</b>:{data.oriTimeStamp}</p>
+               <img src={data.ori.oriPic} className={classes.img} alt={data.ori.oriID}/>
+               <p><b>ID</b>:{data.ori.oriID}</p>
+               <p><b>Timestamp</b>:{data.ori.oriTimeStamp}</p>
              </p>
            </Grid>
            <Grid container item xs={9} md={8} lg={9} spacing={3}>

@@ -22,7 +22,7 @@ const styles = theme => ({
   },
 });
 
-const dataFound = [
+let dataFound = [
   {
     foundID:"111111",
     foundPic:'https://upload.wikimedia.org/wikipedia/commons/b/b4/JPEG_example_JPG_RIP_100.jpg'
@@ -34,6 +34,12 @@ const dataFound = [
     foundPic:'https://upload.wikimedia.org/wikipedia/commons/b/b4/JPEG_example_JPG_RIP_100.jpg',
   }
 ]
+let oriData =
+  {
+    oriPic:'https://www.siliconera.com/wp-content/uploads/2017/09/ashspikachuhoenhatsm1504769753857_1280w.jpg',
+    oriID:"123456",
+    oriTimeStamp: "10:00"
+  }
 
 
 class SearchAppBar extends Component{
@@ -42,9 +48,7 @@ class SearchAppBar extends Component{
     this.state = {
       data:[
         {
-          oriPic:'https://www.siliconera.com/wp-content/uploads/2017/09/ashspikachuhoenhatsm1504769753857_1280w.jpg',
-          oriID:"123456",
-          oriTimeStamp: "10:00",
+          ori: oriData,
           founds:dataFound
         }
       ]
@@ -52,7 +56,6 @@ class SearchAppBar extends Component{
   }
   //print to screen list view of oriPic and foundPic by oriID
   buildSingleList(){
-    console.log(this.state.data)
     return this.state.data.map((item) => <SingleLineGridList data={item} key={item.oriID}/>)
   }
 
@@ -63,13 +66,31 @@ class SearchAppBar extends Component{
       //copy data from ori to this.state.data
       this.setState({data:[...this.state.data,ori]})
   }
+
+
 //demo call function Insert()
   componentDidMount = ()=>{
     setTimeout (()=>{
+      oriData = {
+        oriPic:'https://upload.wikimedia.org/wikipedia/commons/b/b4/JPEG_example_JPG_RIP_100.jpg',
+        oriID:"123459",
+        oriTimeStamp: "10:09"
+      }
+    
+      dataFound = [
+        {
+          foundID:"111114",
+          foundPic:'https://www.siliconera.com/wp-content/uploads/2017/09/ashspikachuhoenhatsm1504769753857_1280w.jpg'
+        },{
+          foundID:"111115",
+          foundPic:'https://www.siliconera.com/wp-content/uploads/2017/09/ashspikachuhoenhatsm1504769753857_1280w.jpg'
+        },{
+          foundID:"111116",
+          foundPic:'https://www.siliconera.com/wp-content/uploads/2017/09/ashspikachuhoenhatsm1504769753857_1280w.jpg',
+        }
+      ]
       this.Insert({
-        oriPic:'https://www.siliconera.com/wp-content/uploads/2017/09/ashspikachuhoenhatsm1504769753857_1280w.jpg',
-        oriID:"123457",
-        oriTimeStamp: "10:01",
+        ori: oriData,
         founds:dataFound
       })
       console.log(this.state.data)
