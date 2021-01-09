@@ -53,25 +53,26 @@ class SingleLineGridList extends Component{
   GenerateFoundList = ()=>{
     const {data} = this.state;
     const {classes} = this.props;
-    return  data.founds.map((tile,index) => (
+    return  data.founds.map((tile,index) => ( 
           <p key={"key"+index}>
-            <img src={tile.foundPic} className={classes.image} alt={tile.foundID}/>
-            <p><b>ID</b>:{tile.foundID}</p>
+            <img src={"data:image/png;base64," +  tile.foundPic} className={classes.image} alt={tile.personID}/>
+            <p><b>PersonID</b>:{tile.personID}</p>
           </p>
       ))
   }
-
+  //src={data.ori.query_image} //
+  //src={data.ori.query_image} // Grid container item xs={9} md={8} lg={9} spacing={3}
   render = ()=>{
     const { classes } = this.props;
     const  {data} = this.state
     return (
        <div className={classes.root}>
          <Grid container justify="center" className={classes.line}>
-           <Grid container item xs={3} md={4} lg={3} spacing={3} >
+           <Grid container item xs={2} md={4} lg={3} spacing={3} >
              <p className={classes.oridata}>
-               <img src={data.ori.oriPic} className={classes.img} alt={data.ori.oriID}/>
-               <p><b>ID</b>:{data.ori.oriID}</p>
-               <p><b>Timestamp</b>:{data.ori.oriTimeStamp}</p>
+               <img src={"data:image/png;base64," +  data.ori.query_image} className={classes.img} alt={data.ori.camera_id}/>
+               <p><b>CameraID</b>:{data.ori.camera_id}</p>
+               <p><b>Timestamp</b>:{data.ori.timestamp}</p>
              </p>
            </Grid>
            <Grid container item xs={9} md={8} lg={9} spacing={3}>

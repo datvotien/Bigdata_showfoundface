@@ -22,24 +22,14 @@ const styles = theme => ({
   },
 });
 
-let dataFound = [
-  {
-    foundID:"111111",
-    foundPic:'https://upload.wikimedia.org/wikipedia/commons/b/b4/JPEG_example_JPG_RIP_100.jpg'
-  },{
-    foundID:"111112",
-    foundPic:'https://upload.wikimedia.org/wikipedia/commons/b/b4/JPEG_example_JPG_RIP_100.jpg'
-  },{
-    foundID:"111113",
-    foundPic:'https://upload.wikimedia.org/wikipedia/commons/b/b4/JPEG_example_JPG_RIP_100.jpg',
-  }
-]
+
 let oriData =
   {
-    oriPic:'https://www.siliconera.com/wp-content/uploads/2017/09/ashspikachuhoenhatsm1504769753857_1280w.jpg',
-    oriID:"123456",
-    oriTimeStamp: "10:00"
+  
   }
+
+let vectorIds = []
+let imageParam = ""
 
 
 class SearchAppBar extends Component{
@@ -47,54 +37,153 @@ class SearchAppBar extends Component{
     super(props)
     this.state = {
       data:[
-        {
-          ori: oriData,
-          founds:dataFound
-        }
-      ]
-    }
+        
+      ],
+      events: [],
+      images: []
+    }    
   }
   //print to screen list view of oriPic and foundPic by oriID
   buildSingleList(){
     return this.state.data.map((item) => <SingleLineGridList data={item} key={item.oriID}/>)
   }
 
-  Insert = (ori)=>{
-      if(!ori){
-        return;
-      }
-      //copy data from ori to this.state.data
-      this.setState({data:[...this.state.data,ori]})
+  insertParamVector(vectorIds) {
+    let param = ""
+    for (var i = 0; i < vectorIds.length; i++) {
+      param = param + "id=" + vectorIds[i] + "&"
+    }
+
+    return param
   }
 
+  
+
+  Insert = (oriArray)=>{
+      if(oriArray.length == 0){
+        return;
+      }
+      
+      this.setState({
+        data: oriArray
+      })
+  }
+
+  createArrayVectorIds(dataEventsReq) {
+    vectorIds = []
+    for (var i = 0; i < dataEventsReq.length; i++) {
+      for (var j = 0; j < dataEventsReq[i].vector_ids.length; j ++) {
+        vectorIds = vectorIds.concat(dataEventsReq[i].vector_ids[j])
+      }
+    }
+
+    function onlyUnique(value, index, self) {
+      return self.indexOf(value) === index;
+    }
+
+    vectorIds = vectorIds.filter(onlyUnique)
+
+    return vectorIds
+  }
+
+  createDataImageMap(arrayImages) {
+    var result = arrayImages.reduce(function(map, obj) {
+      map[obj.vector_ids] = obj;
+      return map;
+    }, {});
+
+    var oriSimiArray = []
+    for (var i = 0; i < this.state.events.length; i++) {
+      var eventData = this.state.events[i]
+      oriData = {
+        query_image: eventData.query_image,
+        camera_id: eventData.camera_id,
+        timestamp: eventData.timestamp,
+      }
+
+      var dataFound = []
+
+      for (var j = 0; j < eventData.vector_ids.length; j++) {
+        var vector_id = eventData.vector_ids[j]
+        var objectImage = result[vector_id]
+        if (objectImage != undefined) {
+          var dataFoundObject = {
+            foundID: vector_id,
+            foundPic: objectImage.image_base64,
+            personID: objectImage.person_id,
+          }
+  
+          dataFound.push(dataFoundObject)
+        }
+        
+        if (dataFound.length == 4) {
+          break
+        }
+      }
+
+      var simiObject = {
+        ori: oriData,
+        founds:dataFound
+      }
+
+      oriSimiArray.push(simiObject)
+    }
+
+    console.log(simiObject)
+
+    setTimeout (()=>{
+      this.Insert(oriSimiArray)
+    },10)
+
+    console.log(this.state.events)
+    console.log(this.state.images)
+    console.log(result)
+
+    return result
+  }
+
+  fetchGetEvents() {
+    fetch('/v1/events')
+    .then((response) => response.json().then((res) => {
+      this.setState({
+        events: res.slice(0,10).map(item => {
+          return {
+            query_image: item.query_image,
+            timestamp: item.timestamp,
+            camera_id: item.camera_id,
+            vector_ids: item.vector_ids,
+          };
+        })
+      }, () => {
+        vectorIds = this.createArrayVectorIds(this.state.events);
+        imageParam = this.insertParamVector(vectorIds)
+        this.fetchGetImage(imageParam)
+      });
+    }));
+  }
+
+  fetchGetImage(param) {
+    fetch('/v1/images?' + param)
+    .then((response) => response.json().then((res) => {
+      this.setState({
+        images: res.map(item => {
+          return {
+            image_base64: item.image_base64,
+            vector_ids: item.vector_ids,
+            person_id: item.person_id,
+          };
+        })
+      }, () => {
+        this.createDataImageMap(this.state.images)
+      });
+    }));
+  }
 
 //demo call function Insert()
   componentDidMount = ()=>{
-    setTimeout (()=>{
-      oriData = {
-        oriPic:'https://upload.wikimedia.org/wikipedia/commons/b/b4/JPEG_example_JPG_RIP_100.jpg',
-        oriID:"123459",
-        oriTimeStamp: "10:09"
-      }
-    
-      dataFound = [
-        {
-          foundID:"111114",
-          foundPic:'https://www.siliconera.com/wp-content/uploads/2017/09/ashspikachuhoenhatsm1504769753857_1280w.jpg'
-        },{
-          foundID:"111115",
-          foundPic:'https://www.siliconera.com/wp-content/uploads/2017/09/ashspikachuhoenhatsm1504769753857_1280w.jpg'
-        },{
-          foundID:"111116",
-          foundPic:'https://www.siliconera.com/wp-content/uploads/2017/09/ashspikachuhoenhatsm1504769753857_1280w.jpg',
-        }
-      ]
-      this.Insert({
-        ori: oriData,
-        founds:dataFound
-      })
-      console.log(this.state.data)
-    },5000)
+    this.fetchGetEvents()
+
+    //setInterval(this.fetchGetEvents, 10000);
   }
 
   render = ()=>{
